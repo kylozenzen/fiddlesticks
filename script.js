@@ -1065,9 +1065,6 @@ const AddFoodModal = ({ isOpen, onClose, onAdd, recentFoods, onSaveCustom, initi
 
     const handleSelectFood = (item) => {
         haptic.light();
-        // Immediately hide suggestions and update food
-        setShowSuggestions(false);
-        setSuggestions([]);
         setFood({
             name: item.name,
             protein: item.protein,
@@ -1075,6 +1072,8 @@ const AddFoodModal = ({ isOpen, onClose, onAdd, recentFoods, onSaveCustom, initi
             portionTip: item.portion,
             note: ''
         });
+        setSuggestions([]);
+        setShowSuggestions(false);
         // Blur input to dismiss keyboard
         inputRef.current?.blur();
     };
