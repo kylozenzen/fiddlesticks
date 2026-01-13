@@ -1025,8 +1025,15 @@ const AddFoodModal = ({ isOpen, onClose, onAdd, recentFoods, onSaveCustom, initi
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef(null);
+    const suppressNextSuggestRef = useRef(false);
 
     useEffect(() => {
+        if (suppressNextSuggestRef.current) {
+            suppressNextSuggestRef.current = false;
+            setSuggestions([]);
+            setShowSuggestions(false);
+            return;
+        }
         if (!food.name || food.name.length < 2) { 
             setSuggestions([]); 
             setShowSuggestions(false);
