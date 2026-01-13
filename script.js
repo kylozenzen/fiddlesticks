@@ -1025,8 +1025,15 @@ const AddFoodModal = ({ isOpen, onClose, onAdd, recentFoods, onSaveCustom, initi
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef(null);
+    const suppressNextSuggestRef = useRef(false);
 
     useEffect(() => {
+        if (suppressNextSuggestRef.current) {
+            suppressNextSuggestRef.current = false;
+            setSuggestions([]);
+            setShowSuggestions(false);
+            return;
+        }
         if (!food.name || food.name.length < 2) { 
             setSuggestions([]); 
             setShowSuggestions(false);
@@ -1065,9 +1072,7 @@ const AddFoodModal = ({ isOpen, onClose, onAdd, recentFoods, onSaveCustom, initi
 
     const handleSelectFood = (item) => {
         haptic.light();
-        // Immediately hide suggestions and update food
-        setShowSuggestions(false);
-        setSuggestions([]);
+        suppressNextSuggestRef.current = true;
         setFood({
             name: item.name,
             protein: item.protein,
@@ -1075,6 +1080,8 @@ const AddFoodModal = ({ isOpen, onClose, onAdd, recentFoods, onSaveCustom, initi
             portionTip: item.portion,
             note: ''
         });
+        setSuggestions([]);
+        setShowSuggestions(false);
         // Blur input to dismiss keyboard
         inputRef.current?.blur();
     };
