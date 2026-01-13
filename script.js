@@ -1072,6 +1072,7 @@ const AddFoodModal = ({ isOpen, onClose, onAdd, recentFoods, onSaveCustom, initi
 
     const handleSelectFood = (item) => {
         haptic.light();
+        suppressNextSuggestRef.current = true;
         setFood({
             name: item.name,
             protein: item.protein,
