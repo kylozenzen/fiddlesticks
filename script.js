@@ -1074,10 +1074,6 @@ const AddFoodModal = ({ isOpen, onClose, onAdd, recentFoods, onSaveCustom, initi
         });
         setSuggestions([]);
         setShowSuggestions(false);
-        setTimeout(() => {
-            setSuggestions([]);
-            setShowSuggestions(false);
-        }, 0);
         // Blur input to dismiss keyboard
         inputRef.current?.blur();
     };
